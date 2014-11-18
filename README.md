@@ -1,13 +1,11 @@
 # pdf-autoprint
 Add auto printing javascript to PDFs
 
-**NOTE:** This is a work in progress and is not currently ready for use.
-
 
 ## Install
 You'll need [python](https://www.python.org/) installed
 
-    pip install git+https://github.com/millerhare/pdf-autoprint.git
+    pip install git+ssh://git@github.com/millerhare/pdf-autoprint.git
 
 
 ## Usage
