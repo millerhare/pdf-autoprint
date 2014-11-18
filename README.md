@@ -12,7 +12,7 @@ You'll need [python](https://www.python.org/) installed
 
 ## Usage
 
-    $ pdf-autoprint --help
+    $ pdf-autoprint.py --help
     pdf-autoprint, embed auto print JavaScript to a PDF document that will execute automatically when the document is opened
 
     Usage: pdf-autoprint [options] in-pdf-file out-pdf-file
