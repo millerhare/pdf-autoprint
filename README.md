@@ -19,3 +19,11 @@ You'll need [python](https://www.python.org/) installed
       --version   show program's version number and exit
       -h, --help  show this help message and exit
 
+So for example
+
+    pdf-autoprint.py in.pdf out.pdf
+
+It also supports glob matching which is used in the following way. Note the outpath **must** be a directory if the glob matches multiple files.
+
+    pdf-autoprint.py "doc*.pdf" out/
+
