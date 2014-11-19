@@ -2,24 +2,42 @@
 from PyPDF2 import PdfFileWriter, PdfFileReader
 
 import optparse
+import glob
+import os
 
 
-def AddPrint(infile, outfile):
-  output = PdfFileWriter()
-  input  = PdfFileReader(open(infile, "rb"))
+def AddPrint(infile, outpath):
+  files = glob.glob(infile)
+  outisdir = os.path.isdir(outpath)
 
-  # print how many pages input has:
-  print "Processing '%s' with %d pages." % (infile, input.getNumPages())
+  # We have multiple files check if the output is a directory.
+  if len(files) > 1 and not(outisdir):
+    print 'Out path must be a directory if infile is multiple files'
+    return
 
-  for x in range(0, input.getNumPages()):
-    output.addPage(input.getPage(x))
+  for f in files:
+    if outisdir:
+      outfile = os.path.join(outpath, os.path.basename(f))
+    else:
+      outfile = outpath
 
-  # add some Javascript to launch the print window on opening this PDF.
-  output.addJS("this.print({bUI:true,bSilent:false,bShrinkToFit:true});")
+    output = PdfFileWriter()
+    input  = PdfFileReader(open(f, "rb"))
 
-  # write output to disk
-  outputStream = file(outfile, "wb")
-  output.write(outputStream)
+    # print how many pages input has:
+    print "Processing: '%s', %d pages" % (f, input.getNumPages())
+
+    for x in range(0, input.getNumPages()):
+      output.addPage(input.getPage(x))
+
+    # add some Javascript to launch the print window on opening this PDF.
+    output.addJS("this.print({bUI:true,bSilent:false,bShrinkToFit:true});")
+
+    # write output to disk
+    outputStream = file(outfile, "wb")
+    output.write(outputStream)
+    print "Written: %s" % outfile
+
 
 
 def Main():
