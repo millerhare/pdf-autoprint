@@ -27,3 +27,6 @@ It also supports glob matching which is used in the following way. Note the outp
 
     pdf-autoprint.py "doc*.pdf" out/
 
+
+## License
+MIT
