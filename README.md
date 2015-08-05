@@ -24,6 +24,7 @@ So for example
     pdf-autoprint.py in.pdf out.pdf
 
 It also supports glob matching which is used in the following way. Note the outpath **must** be a directory if the glob matches multiple files.
+The output folder must exist. In windows there should be no trailing slash on the path.
 
     pdf-autoprint.py "doc*.pdf" out/
 
