@@ -6,9 +6,29 @@ import glob
 import os
 
 
-def AddPrint(infile, outpath):
+def RemovePrint(infile, outpath):
   files = glob.glob(infile)
+  if not outpath:
+    outpath = os.path.join(os.path.dirname(infile), "noprint")
+    print("Defaulting output to " + outpath)
+    os.makedirs(outpath)
+
   outisdir = os.path.isdir(outpath)
+  outexists = os.path.exists(outpath)
+
+  if len(files) > 1 and not(outisdir):
+    outpath = os.path.dirname(outpath)
+    outisdir = os.path.isdir(outpath)
+    outexists = os.path.exists(outpath)
+
+  if outisdir and os.path.samefile(os.path.dirname(infile), outpath):
+    outpath = os.path.join(outpath, "noprint")
+    outisdir = os.path.isdir(outpath)
+    outexists = os.path.exists(outpath)
+
+  if not outexists and outisdir:
+    os.makedirs(outpath)
+    outexists = os.path.exists(outpath)
 
   # We have multiple files check if the output is a directory.
   if len(files) > 1 and not(outisdir):
@@ -41,18 +61,20 @@ def AddPrint(infile, outpath):
 
 
 def Main():
-    parser = optparse.OptionParser(usage='usage: %prog [options] in-pdf-file out-pdf-file', version='%prog 0.1')
+    parser = optparse.OptionParser(usage='usage: %prog [options] in-pdf-file [out-pdf-file]', version='%prog 0.2')
     (options, args) = parser.parse_args()
- 
-    if len(args) != 2:
+
+    if len(args) < 1:
         print("pdf-noprint, remove auto print JavaScript from a PDF document that executes automatically when the document is opened")
         print("")
         parser.print_help()
         return
 
     infile  = args[0]
-    outfile = args[1]
-    AddPrint(infile, outfile)
+    outfile = ""
+    if len(args) > 1:
+      outfile = args[1]
+    RemovePrint(infile, outfile)
 
 if __name__ == '__main__':
     Main()
