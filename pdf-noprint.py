@@ -11,7 +11,6 @@ def RemovePrint(infile, outpath):
   if not outpath:
     outpath = os.path.join(os.path.dirname(infile), "noprint")
     print("Defaulting output to " + outpath)
-    os.makedirs(outpath)
 
   outisdir = os.path.isdir(outpath)
   outexists = os.path.exists(outpath)
@@ -26,8 +25,9 @@ def RemovePrint(infile, outpath):
     outisdir = os.path.isdir(outpath)
     outexists = os.path.exists(outpath)
 
-  if not outexists and outisdir:
+  if not outexists and len(files) > 1:
     os.makedirs(outpath)
+    outisdir = os.path.isdir(outpath)
     outexists = os.path.exists(outpath)
 
   # We have multiple files check if the output is a directory.
