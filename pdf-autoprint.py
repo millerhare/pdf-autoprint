@@ -9,7 +9,10 @@ import os
 def AddPrint(infile, outpath):
   files = glob.glob(infile)
   if not outpath:
-    outpath = os.path.join(os.path.dirname(infile), "autoprint")
+    if len(files) > 1:
+      outpath = os.path.join(os.path.dirname(infile), "autoprint")
+    else:
+      outpath = os.path.splitext(infile)[0] + '_autoprint.pdf'
     print("Defaulting output to " + outpath)
 
   outisdir = os.path.isdir(outpath)
